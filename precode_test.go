@@ -18,10 +18,8 @@ func TestMainHandlerCorrectRequest(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
 
-	require.Equal(t, http.StatusOK, responseRecorder.Code) // статус 200
-	responseBody := responseRecorder.Body.String()
-
-	require.NotEmpty(t, responseBody, "тело ответа не должно быть пустым") // проверка что тело ответа не пустое
+	require.Equal(t, http.StatusOK, responseRecorder.Code)                                   // статус 200
+	require.NotEmpty(t, responseRecorder.Body.String(), "тело ответа не должно быть пустым") // проверка что тело ответа не пустое
 }
 
 // Неподдерживаемый город
@@ -32,7 +30,7 @@ func TestMainHandlerUnsupportedCity(t *testing.T) {
 	handler := http.HandlerFunc(mainHandle)
 	handler.ServeHTTP(responseRecorder, req)
 
-	assert.Equal(t, http.StatusBadRequest, responseRecorder.Code) // 400
+	require.Equal(t, http.StatusBadRequest, responseRecorder.Code) // 400
 	assert.Equal(t, responseRecorder.Body.String(), "wrong city value")
 }
 
